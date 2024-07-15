@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+  <Tracking>
+    <ImageTarget name="marker_pixelkatze" size="0.148000 0.209977" />
+    <ImageTarget name="wall-optimized" size="0.210000 0.148050" />
+    <ImageTarget name="wall" size="0.210000 0.147980" />
+    <ImageTarget name="typo" size="0.210000 0.147980" />
+    <ImageTarget name="rocket" size="0.210000 0.147980" />
+    <ImageTarget name="ornament" size="0.148000 0.210028" />
+    <ImageTarget name="coffee" size="0.210000 0.210000" />
+    <ImageTarget name="flower" size="0.210000 0.147980" />
+  </Tracking>
+</QCARConfig>
