@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Rotates object on drag
+/// </summary>
 public class RotatingContent : MonoBehaviour
 {
 

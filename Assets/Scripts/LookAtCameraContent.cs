@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Makes object rotate to camera
+/// </summary>
 public class LookAtCameraContent : MonoBehaviour
 {
     void Update()

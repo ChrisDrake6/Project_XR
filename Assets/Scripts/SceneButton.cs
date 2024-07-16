@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Calls ARManager to open the corresponding scene
+/// </summary>
 public class SceneButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] ARScenes targetScene;

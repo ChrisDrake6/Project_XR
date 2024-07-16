@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.Video;
 
+/// <summary>
+/// Plays video on press or pauses it
+/// </summary>
 public class VideoContainer : MonoBehaviour
 {
     [SerializeField] GameObject PlayButton;

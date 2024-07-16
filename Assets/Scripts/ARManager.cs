@@ -7,17 +7,27 @@ public class ARManager : MonoBehaviour
 {
     public static ARManager Instance { get; private set; }
 
+    [Header ("MainUIProperties")]
     [SerializeField] TMP_Text scaleFactorLabel;
     [SerializeField] TMP_Text distanceLabel;
     [SerializeField] Slider scaleSlider;
     [SerializeField] Transform imageTarget;
-    [SerializeField] string webUrl;
 
+    [Header ("PressindicatorProperties")]
     [SerializeField] GameObject pressIndicator;
     [SerializeField] Image pressIndicatorIconContainer;
     [SerializeField] Image pressIndicatorFillMeter;
     [SerializeField] float holdDuration;
 
+    [Header ("PressIndicatorIcons")]
+    [SerializeField] Sprite infoSprite;
+    [SerializeField] Sprite tropicalSprite;
+    [SerializeField] Sprite videoSprite;
+    [SerializeField] Sprite divingHelmetSprite;
+    [SerializeField] Sprite listSprite;
+    [SerializeField] Sprite webSprite;
+
+    [Header ("AvailableScenes")]
     [SerializeField] GameObject infoScene;
     [SerializeField] GameObject tropicalScene;
     [SerializeField] GameObject videoScene;
@@ -25,12 +35,8 @@ public class ARManager : MonoBehaviour
     [SerializeField] GameObject listScene;
     [SerializeField] GameObject webScene;
 
-    [SerializeField] Sprite infoSprite;
-    [SerializeField] Sprite tropicalSprite;
-    [SerializeField] Sprite videoSprite;
-    [SerializeField] Sprite divingHelmetSprite;
-    [SerializeField] Sprite listSprite;
-    [SerializeField] Sprite webSprite;
+    [Header ("Miscellaneous")]
+    [SerializeField] string webUrl;
 
     GameObject currentSceneObject;
     ARScenes currentScene;
@@ -44,10 +50,15 @@ public class ARManager : MonoBehaviour
 
     void Update()
     {
+        // Show distance to ImageTarget
         float distance = Vector3.Distance(Camera.main.transform.position, imageTarget.position);
         distanceLabel.text = "Distanz: " + string.Format("{0:0.00}", distance / Vuforia.VuforiaConfiguration.Instance.Vuforia.VirtualSceneScaleFactor) + " m";
     }
 
+    /// <summary>
+    /// Scale scene with the slider
+    /// </summary>
+    /// <param name="scaleFactor"></param>
     public void SetScale(float scaleFactor)
     {
         if (currentSceneObject != null)
@@ -68,23 +79,38 @@ public class ARManager : MonoBehaviour
         Application.Quit();
     }
 
+    /// <summary>
+    /// While pressing a button, this function gets called OnUpdate:
+    /// - Show press indication
+    /// - Check if the button got pressed for given time, then open corresponding scene
+    /// </summary>
+    /// <param name="targetScene"></param>
     public void OpenScene(ARScenes targetScene)
     {
+        // If target scene is already open, nothing needs to be done
         if (targetScene != currentScene)
         {
+            // Check if button has been pressed long enough
             if (timePressed >= holdDuration)
             {
+                // Hide press indicator
                 pressIndicator.SetActive(false);
+
+                // Close former scene
                 if (currentSceneObject != null)
                 {
                     currentSceneObject.SetActive(false);
                 }
+
+                // Enable scaling, if not yet available
                 scaleSlider.gameObject.SetActive(true);
                 scaleFactorLabel.gameObject.SetActive(true);
                 SetScale(1);
                 scaleSlider.value = currentScaleFactor;
-                currentScene = targetScene;
                 timePressed = 0;
+
+                // Open target scene and save as current
+                currentScene = targetScene;
 
                 switch (currentScene)
                 {
@@ -112,10 +138,12 @@ public class ARManager : MonoBehaviour
             }
             else
             {
+                // Show press indicator and fill the meter
                 pressIndicator.SetActive(true);
                 timePressed += Time.deltaTime;
                 pressIndicatorFillMeter.fillAmount = timePressed / holdDuration;
 
+                // Show correct Icon
                 switch (targetScene)
                 {
                     case ARScenes.Info:

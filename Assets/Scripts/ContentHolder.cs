@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Shows stored content on press
+/// </summary>
 public class ContentHolder : MonoBehaviour
 {
     [SerializeField] GameObject indicator;
